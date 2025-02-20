@@ -15,10 +15,10 @@ from sklearn.model_selection import train_test_split
 # DATASET : https://www.kaggle.com/datasets/ashfakyeafi/cat-dog-images-for-classification
 
 class Model:
-    def __init__(self, path: str) -> None:
+    def __init__(self, path):
         self.path = path
 
-    def load_dataset(self, path: str, dsize : int) -> tuple[np.ndarray, np.ndarray]:
+    def load_dataset(self, path, dsize):
         images = []
         labels = []
 
@@ -80,14 +80,14 @@ class Model:
         self.model.compile(loss="binary_crossentropy", optimizer="adam", metrics=["accuracy"])
         history = self.model.fit(X_train, y_train, validation_data=(X_valid, y_valid), epochs=50, batch_size=64)
         score = self.model.evaluate(X_test, y_test, verbose=0)
-        print(f"SKOR: {score}")
+        print(f"SCORE: {score}")
         
         pd.DataFrame(history.history).plot(figsize=(8,5), grid=True)
         plt.show()
         
-        cnt = input("Press ENTER to Save The Model.")
+        save = input("Press ENTER to Save The Model.")
 
-        if cnt == "":
+        if save == "":
             save_model(self.model, "./model/new_model.h5", overwrite=True)
 
 if __name__ == "__main__":

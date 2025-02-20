@@ -24,19 +24,18 @@ class Model:
 
         y_proba = self.model.predict(X_new)
         y_pred = (y_proba > 0.5).astype("int32")
-        preds = np.array(["Kopek", "Kedi"])[y_pred]
+        preds = np.array(["Dog", "Cat"])[y_pred]
 
         return preds
     
-class Display(Model):
+class FileVision(Model):
     def __init__(self, path : str) -> None:
-        super(Display, self).__init__(path)
+        super(FileVision, self).__init__(path)
         self.build()
-        self.initui()
 
-    def initui(self):
+    def initialize_ui(self):
         self.root = tk.Tk()
-        self.root.title("Siniflandirici")
+        self.root.title("Classificator")
         self.root.geometry("350x400")
         self.root.resizable(False, False)
 
@@ -72,7 +71,7 @@ class Display(Model):
             self.show_image(file_path)
 
         else:
-            print("Dosya seçilmedi.")
+            print("File do not selected.")
 
     def model_predict(self):
         result = self.predict(self.test_path)
@@ -92,4 +91,4 @@ class Display(Model):
         self.predict_box.delete("1.0", "end")
 
 if __name__ == "__main__":
-    Display(path="./model/model.h5")
+    FileVision(path="./model/model.h5").initialize_ui()
